@@ -54,7 +54,6 @@ export default function App() {
       setCurrentUser(savedUser);
       loadUserTodos(savedUser.id);
     } else if (users.length > 0) {
-      // Default auto-select first user for smooth initial preview
       setCurrentUser(users[0]);
       setCurrentUserInStorage(users[0]);
       loadUserTodos(users[0].id);
@@ -100,11 +99,9 @@ export default function App() {
     addToast(`สลับการใช้งานเป็น ${user.name}`, 'info');
   };
 
-  // Filter and Sort Todos logic
   const filteredTodos = useMemo(() => {
     let result = [...todos];
 
-    // Search filter
     if (filters.search.trim()) {
       const q = filters.search.trim().toLowerCase();
       result = result.filter(
@@ -115,17 +112,14 @@ export default function App() {
       );
     }
 
-    // Status filter
     if (filters.status !== 'All') {
       result = result.filter((t) => t.status === filters.status);
     }
 
-    // Priority filter
     if (filters.priority !== 'All') {
       result = result.filter((t) => t.priority === filters.priority);
     }
 
-    // Due Date filter
     if (filters.dueFilter !== 'All') {
       if (filters.dueFilter === 'Overdue') {
         result = result.filter((t) => isOverdue(t.due_date, t.status));
@@ -141,7 +135,6 @@ export default function App() {
       }
     }
 
-    // Sort logic
     result.sort((a, b) => {
       switch (filters.sortBy) {
         case 'created_at_desc':
@@ -176,7 +169,6 @@ export default function App() {
     return result;
   }, [todos, filters]);
 
-  // Statistics
   const stats: TodoStats = useMemo(() => {
     const total = todos.length;
     const todo = todos.filter((t) => t.status === 'Todo').length;
@@ -188,7 +180,6 @@ export default function App() {
     return { total, todo, inProgress, done, overdue, completionRate };
   }, [todos]);
 
-  // CRUD Handlers
   const handleSaveTodo = (
     todoData: Omit<Todo, 'id' | 'created_at' | 'updated_at'> & { id?: string }
   ) => {
@@ -235,7 +226,6 @@ export default function App() {
     });
   };
 
-  // Render Login view if unauthenticated
   if (!currentUser) {
     return (
       <>
@@ -246,9 +236,8 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-indigo-500 selection:text-white">
+    <div className="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col font-sans selection:bg-indigo-500 selection:text-white">
       
-      {/* Top Header */}
       <Navbar
         currentUser={currentUser}
         onLogout={handleLogout}
@@ -260,19 +249,17 @@ export default function App() {
         }}
       />
 
-      {/* Main Content Area */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6">
         
-        {/* Top welcome banner */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-gradient-to-r from-slate-900 via-slate-900 to-indigo-950/60 p-5 rounded-2xl border border-slate-800 shadow-sm">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white dark:bg-gradient-to-r dark:from-slate-900 dark:via-slate-900 dark:to-indigo-950/60 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
           <div>
-            <h2 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
               <span>สวัสดีคุณ {currentUser.name}</span>
               <Sparkles className="w-5 h-5 text-amber-400 shrink-0" />
             </h2>
-            <p className="text-xs sm:text-sm text-slate-400 mt-1">
+            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
               {stats.overdue > 0 ? (
-                <span className="text-rose-400 font-semibold">
+                <span className="text-rose-500 dark:text-rose-400 font-semibold">
                   ⚠️ คุณมีงานที่เลยกำหนดวันครบกำหนด {stats.overdue} รายการ ควรตรวจสอบและเร่งดำเนินการ!
                 </span>
               ) : (
@@ -293,7 +280,6 @@ export default function App() {
           </button>
         </div>
 
-        {/* Overview Dashboard Statistics Cards */}
         <DashboardStats
           stats={stats}
           selectedStatusFilter={filters.status}
@@ -302,7 +288,6 @@ export default function App() {
           onSelectDueFilter={(dueFilter) => setFilters((prev) => ({ ...prev, dueFilter: dueFilter as DueFilter }))}
         />
 
-        {/* Filter Controls Bar */}
         <TodoFilters
           filters={filters}
           onFilterChange={(updated) => setFilters((prev) => ({ ...prev, ...updated }))}
@@ -312,7 +297,6 @@ export default function App() {
           totalFilteredCount={filteredTodos.length}
         />
 
-        {/* Todo List / Grid Render */}
         {filteredTodos.length > 0 ? (
           <div
             className={
@@ -337,16 +321,15 @@ export default function App() {
             ))}
           </div>
         ) : (
-          /* Empty State */
-          <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-12 text-center space-y-4 my-8">
-            <div className="w-16 h-16 rounded-full bg-slate-800 text-slate-500 mx-auto flex items-center justify-center">
+          <div className="bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-2xl p-12 text-center space-y-4 my-8">
+            <div className="w-16 h-16 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-500 mx-auto flex items-center justify-center">
               <ListTodo className="w-8 h-8" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-slate-200">
+              <h3 className="text-base font-bold text-slate-900 dark:text-slate-200">
                 {todos.length === 0 ? 'ยังไม่มีรายการ Todo ใดๆ' : 'ไม่พบ Todo ที่ตรงกับเงื่อนไขการค้นหา'}
               </h3>
-              <p className="text-xs text-slate-400 max-w-sm mx-auto mt-1">
+              <p className="text-xs text-slate-500 dark:text-slate-400 max-w-sm mx-auto mt-1">
                 {todos.length === 0
                   ? 'เริ่มต้นบันทึกงานแรกของคุณโดยกดปุ่ม "สร้าง Todo ใหม่" ได้ทันที'
                   : 'ลองเปลี่ยนคำค้นหา หรือล้างตัวกรองเพื่อดูรายการทั้งหมด'}
@@ -366,7 +349,7 @@ export default function App() {
             ) : (
               <button
                 onClick={handleResetFilters}
-                className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-medium border border-slate-700"
+                className="px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-xl text-xs font-medium border border-slate-300 dark:border-slate-700"
               >
                 ล้างตัวกรองทั้งหมด
               </button>
@@ -376,12 +359,10 @@ export default function App() {
 
       </main>
 
-      {/* Footer */}
-      <footer className="border-t border-slate-900 bg-slate-950 py-6 text-center text-xs text-slate-500">
+      <footer className="border-t border-slate-200 dark:border-slate-900 bg-white dark:bg-slate-950 py-6 text-center text-xs text-slate-500 dark:text-slate-500">
         <p>ระบบจัดการงาน Todo List — พัฒนาด้วย React & Tailwind CSS</p>
       </footer>
 
-      {/* Create / Edit Todo Modal */}
       <TodoModal
         isOpen={isModalOpen}
         onClose={() => {
@@ -393,7 +374,6 @@ export default function App() {
         currentUserId={currentUser.id}
       />
 
-      {/* Delete Confirmation Modal */}
       <ConfirmModal
         isOpen={!!deleteConfirmTodo}
         title="ยืนยันการลบรายการ Todo"
@@ -404,7 +384,6 @@ export default function App() {
         onCancel={() => setDeleteConfirmTodo(null)}
       />
 
-      {/* Global Toast Notifications */}
       <Toast toasts={toasts} onDismiss={handleDismissToast} />
 
     </div>

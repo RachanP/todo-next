@@ -23,35 +23,35 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-fadeIn">
-      <div className="bg-slate-900 border border-slate-700/80 rounded-2xl w-full max-w-md shadow-2xl p-6 relative font-sans">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/80 dark:bg-slate-950/80 backdrop-blur-sm animate-fadeIn">
+      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/80 rounded-2xl w-full max-w-md shadow-2xl p-6 relative font-sans">
         
         <button
           onClick={onCancel}
-          className="absolute top-4 right-4 p-1 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-slate-800 transition-colors"
+          className="absolute top-4 right-4 p-1 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
         >
           <X className="w-5 h-5" />
         </button>
 
         <div className="flex items-start space-x-4">
-          <div className="w-10 h-10 rounded-2xl bg-rose-500/15 border border-rose-500/30 text-rose-400 flex items-center justify-center shrink-0">
+          <div className="w-10 h-10 rounded-2xl bg-rose-100 dark:bg-rose-500/15 border border-rose-200 dark:border-rose-500/30 text-rose-600 dark:text-rose-400 flex items-center justify-center shrink-0">
             <AlertTriangle className="w-5 h-5" />
           </div>
 
           <div className="flex-1 pr-6">
-            <h3 className="text-base font-bold text-slate-100 mb-1">
+            <h3 className="text-base font-bold text-slate-900 dark:text-slate-100 mb-1">
               {title}
             </h3>
-            <p className="text-xs text-slate-300/80 leading-relaxed">
+            <p className="text-xs text-slate-600 dark:text-slate-300/80 leading-relaxed">
               {message}
             </p>
           </div>
         </div>
 
-        <div className="mt-6 pt-4 border-t border-slate-800 flex items-center justify-end space-x-2">
+        <div className="mt-6 pt-4 border-t border-slate-200 dark:border-slate-800 flex items-center justify-end space-x-2">
           <button
             onClick={onCancel}
-            className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium transition-colors"
+            className="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-medium transition-colors"
           >
             {cancelText}
           </button>

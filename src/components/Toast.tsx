@@ -38,24 +38,24 @@ const ToastItem: React.FC<{ toast: ToastMessage; onDismiss: (id: string) => void
   const getIcon = () => {
     switch (toast.type) {
       case 'success':
-        return <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />;
+        return <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />;
       case 'error':
-        return <AlertCircle className="w-4 h-4 text-rose-400 shrink-0" />;
+        return <AlertCircle className="w-4 h-4 text-rose-600 dark:text-rose-400 shrink-0" />;
       case 'info':
       default:
-        return <Info className="w-4 h-4 text-sky-400 shrink-0" />;
+        return <Info className="w-4 h-4 text-sky-600 dark:text-sky-400 shrink-0" />;
     }
   };
 
   const getBg = () => {
     switch (toast.type) {
       case 'success':
-        return 'bg-slate-900 border-emerald-500/40 text-emerald-200';
+        return 'bg-white dark:bg-slate-900 border-emerald-200 dark:border-emerald-500/40 text-emerald-700 dark:text-emerald-200';
       case 'error':
-        return 'bg-slate-900 border-rose-500/40 text-rose-200';
+        return 'bg-white dark:bg-slate-900 border-rose-200 dark:border-rose-500/40 text-rose-700 dark:text-rose-200';
       case 'info':
       default:
-        return 'bg-slate-900 border-sky-500/40 text-sky-200';
+        return 'bg-white dark:bg-slate-900 border-sky-200 dark:border-sky-500/40 text-sky-700 dark:text-sky-200';
     }
   };
 
@@ -69,7 +69,7 @@ const ToastItem: React.FC<{ toast: ToastMessage; onDismiss: (id: string) => void
       </div>
       <button
         onClick={() => onDismiss(toast.id)}
-        className="text-slate-400 hover:text-slate-200 p-1"
+        className="text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 p-1"
       >
         <X className="w-3.5 h-3.5" />
       </button>
