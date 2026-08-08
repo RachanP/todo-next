@@ -1,0 +1,6 @@
+{
+  "name": "ระบบจัดการงาน Todo List",
+  "description": "ระบบบันทึกและติดตามงานที่ต้องทำ พร้อมตัวกรอง การจัดลำดับ และการสรุปสถานะงาน",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
